@@ -1,5 +1,7 @@
 package bowling;
 
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 public class Bowling {
@@ -10,48 +12,15 @@ public class Bowling {
 			String scoreSheet = JOptionPane.showInputDialog("Enter Your Scoresheet\n(Separate each frame with hyphens)\nExample \"50-X-X-5/-X-12-36-90-X-X6/\"");
 			if(scoreSheet == null || scoreSheet.equals(""))
 				System.exit(0);
-			String[] dividedScoreSheet = scoreSheet.split("-");
-			int finalScore = addFrames(dividedScoreSheet);
-			System.out.println("Score Sheet Entered: " + scoreSheet);
-			System.out.println("Final Score: " + finalScore);
-			JOptionPane.showMessageDialog(null, "Score Sheet Entered: " + scoreSheet + "\n" + "Final Score: " + finalScore);
+			ArrayList<String> balls = new ArrayList<String>();
+			for(String frames:scoreSheet.split("-")) {
+				for(String ball:frames.split(""))
+					balls.add(ball);
+			}
+			System.out.println(balls.toString());
+			//JOptionPane.showMessageDialog(null, "Score Sheet Entered: " + scoreSheet + "\n" + "Final Score: " + finalScore);
 			done = JOptionPane.showConfirmDialog(null, "Would you like to enter another score sheet?");
 		}
-	}
-	
-	private static int addFrame(String frame) {
-		int totalScore = 0;
-		for(String score:frame.split("")) {
-			switch(score) {
-				case "X":
-					totalScore = 10;
-					break;
-					
-				case"/":
-					totalScore += (10 - totalScore);
-					break;
-					
-				default:
-					totalScore += Integer.parseInt(score);
-			}
-			System.out.println("Total Score: " + totalScore);
-		}
-		System.out.println("Final Total Score: " + totalScore);
-		return totalScore;
-	}
-	
-	private static int addFrames(String[] frames) {
-		int totalScore = 0;
-		for(int i = 0; i<frames.length; i++) {
-			if(frames[i].contains("X") && i<8)
-				totalScore += (addFrame(frames[i]) + addFrame(frames[i+1]) + addFrame(frames[i+2]));
-			else if(frames[i].contains("/") && i<9)
-				totalScore += (addFrame(frames[i] + addFrame(frames[i+1])));
-			else
-				totalScore += addFrame(frames[i]);
-			System.out.println("Total Score after adding frame " + (i+1) + " : " + totalScore);
-		}
-		return totalScore;
 	}
 
 }
