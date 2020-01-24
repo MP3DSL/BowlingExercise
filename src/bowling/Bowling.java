@@ -14,7 +14,7 @@ public class Bowling {
 			int finalScore = addFrames(dividedScoreSheet);
 			System.out.println("Score Sheet Entered: " + scoreSheet);
 			System.out.println("Final Score: " + finalScore);
-			JOptionPane.showMessageDialog(null, "Final Score: " + finalScore);
+			JOptionPane.showMessageDialog(null, "Score Sheet Entered: " + scoreSheet + "\n" + "Final Score: " + finalScore);
 			done = JOptionPane.showConfirmDialog(null, "Would you like to enter another score sheet?");
 		}
 	}
@@ -28,13 +28,15 @@ public class Bowling {
 					break;
 					
 				case"/":
-					totalScore = 10;
+					totalScore += (10 - totalScore);
 					break;
 					
 				default:
 					totalScore += Integer.parseInt(score);
 			}
+			System.out.println("Total Score: " + totalScore);
 		}
+		System.out.println("Final Total Score: " + totalScore);
 		return totalScore;
 	}
 	
@@ -47,6 +49,7 @@ public class Bowling {
 				totalScore += (addFrame(frames[i] + addFrame(frames[i+1])));
 			else
 				totalScore += addFrame(frames[i]);
+			System.out.println("Total Score after adding frame " + (i+1) + " : " + totalScore);
 		}
 		return totalScore;
 	}
