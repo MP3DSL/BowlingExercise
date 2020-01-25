@@ -27,6 +27,17 @@ public class CustomList<T> implements Iterable<T> {
 	}
 	
 	@Override
+	public String toString() {
+		Node<T> current = head;
+		String string = current.getData().toString();
+		while(current.getNext() != null) {
+			current = current.getNext();
+			string += (", " + current.getData().toString());
+		}
+		return string;
+	}
+	
+	@Override
 	public Iterator<T> iterator() {
 		return new CustomIterator<T>(this);
 	} 
