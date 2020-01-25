@@ -18,8 +18,9 @@ public class Bowling {
 				for(String ball:frames.split(""))
 					balls.add(ball);
 			}
-			System.out.println(balls.toString());
 			int finalScore = addBalls(balls);
+			System.out.println(balls.toString());
+			System.out.println("Final Score: " + finalScore);
 			JOptionPane.showMessageDialog(null, "Score Sheet Entered: " + scoreSheet + "\n" + "Final Score: " + finalScore);
 			done = JOptionPane.showConfirmDialog(null, "Would you like to enter another score sheet?");
 		}
@@ -39,28 +40,45 @@ public class Bowling {
 	private static int addBalls(CustomList<String> balls) {
 		int totalScore = 0;
 		CustomIterator<String> ball = new CustomIterator<String>(balls);
+		String prevBall = null;
+		String score = null;
 		while(ball.hasNext()) {
-			String prevBall = null;
-			String score = ball.next();
+			prevBall = score;
+			score = ball.next();
+			System.out.println("Score: " + score);
 			switch (score){
 				case "X":
-					totalScore += 10;
+					totalScore += getPoints(score, prevBall);
 					if(ball.hasNext()) {
-						totalScore += getPoints(ball.next(), prevBall);
-						if(ball.hasNext())
+						prevBall = score;
+						score = ball.next();
+						totalScore += getPoints(score, prevBall);
+						if(ball.hasNext()) {
+							prevBall = score;
 							totalScore += getPoints(ball.next(), prevBall);
+							if(!ball.hasNext())
+								break;
+							ball.prev();
+						}
 						ball.prev();
 					}
 					break;
 					
 				case "/":
-					if(ball.hasNext())
+					totalScore += getPoints(score, prevBall);
+					if(ball.hasNext()) {
+						prevBall = score;
 						totalScore += getPoints(ball.next(), prevBall);
+						if(!ball.hasNext())
+							break;
+						ball.prev();
+					}
 					break;
 					
 				default:
 					totalScore += Integer.parseInt(score);
 			}
+			System.out.println("Total Score: " + totalScore);
 		}
 		return totalScore;
 	}
