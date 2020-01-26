@@ -40,9 +40,9 @@ public class Bowling {
 	}
 	
 	/**
-	 * Takes in a list of balls thrown to calculate
-	 * @param balls
-	 * @return
+	 * Takes in a list of balls thrown to calculate their total score
+	 * @param balls list to be added
+	 * @return total score of the list
 	 */
 	public static int addBalls(CustomList<String> balls) { //Made public for testing purposes
 		int totalScore = 0;
