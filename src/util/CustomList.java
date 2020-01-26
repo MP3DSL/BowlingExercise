@@ -1,14 +1,27 @@
 package util;
 
-import java.util.Iterator;
-
 import util.CustomIterator;
 
-public class CustomList<T> implements Iterable<T> {
-	Node<T> head, tail;
+/**
+ * This CustomList data structure uses the bare essentials to make a List using the custom defined Node class that will be compatible with the CustomIterator
+ * <p>
+ * Using this will allow for efficient traversal through the CustomList for data that is adjecent or extremely close to each other without having to start from the head or tail of the CustomList
+ * <p>
+ * (Specifically Tailored for the Bowling Technical Exercise)
+ * @author Derrick Lemmon
+ *
+ * @param <E> Generic Class reference to the type of data being added to the CustomList
+ */
+public class CustomList<E> implements Iterable<E> {
+	Node<E> head, tail;
+	int size = 0;
 	
-	public void add(T data) {
-		Node<T> node = new Node<T>(data, null, null);
+	/**
+	 * Creates a Node with the data provided and appends it to the end of the CustomList
+	 * @param data The information being stored within the CustomList
+	 */
+	public void add(E data) {
+		Node<E> node = new Node<E>(data, null, null);
 		if(head == null)
 			tail = head = node;
 		else {
@@ -16,19 +29,36 @@ public class CustomList<T> implements Iterable<T> {
 			tail.setNext(node);
 			tail = node;
 		}
+		size++;
 	}
 	
-	public Node<T> getHead(){
+	/**
+	 * Returns the head of the CustomList
+	 * @return the head of the CustomList
+	 */
+	public Node<E> getHead(){
 		return head;
 	}
 	
-	public Node<T> getTail(){
+	/**
+	 * Returns the tail of the CustomList
+	 * @return the tail of the CustomList
+	 */
+	public Node<E> getTail(){
 		return tail;
+	}
+	
+	/**
+	 * Returns the size of the CustomList
+	 * @return the size of the CustomList
+	 */
+	public int size() {
+		return size;
 	}
 	
 	@Override
 	public String toString() {
-		Node<T> current = head;
+		Node<E> current = head;
 		String string = current.getData().toString();
 		while(current.getNext() != null) {
 			current = current.getNext();
@@ -37,8 +67,7 @@ public class CustomList<T> implements Iterable<T> {
 		return string;
 	}
 	
-	@Override
-	public Iterator<T> iterator() {
-		return new CustomIterator<T>(this);
+	public CustomIterator<E> iterator() {
+		return new CustomIterator<E>(this);
 	} 
 }
